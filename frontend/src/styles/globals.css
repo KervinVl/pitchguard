@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-primary: #0B0C0E;
+    --bg-secondary: #1A1D23;
+    --bg-tertiary: #2E333B;
+    --accent-gold: #C9A961;
+    --critical: #DC2626;
+    --concern: #EAB308;
+    --watch: #3B82F6;
+    --text-primary: #FFFFFF;
+    --text-secondary: #9CA3AF;
+    --text-tertiary: #6B7280;
+  }
+
+  * {
+    @apply border-bg-tertiary;
+  }
+
+  body {
+    @apply font-sans bg-bg-primary text-text-primary antialiased;
+    min-width: 1280px;
+  }
+
+  button:focus-visible,
+  a:focus-visible,
+  [tabindex]:focus-visible {
+    @apply outline-none ring-2 ring-accent-gold ring-offset-2 ring-offset-bg-primary;
+  }
+}
+
+@layer utilities {
+  .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* Hide scrollbar but keep functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari, Opera */
+  }
+}

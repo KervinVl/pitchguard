@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm create:*)",
+      "Bash(npm install)",
+      "Bash(npm install:*)",
+      "Bash(npx tailwindcss:*)",
+      "Bash(./node_modules/.bin/tailwindcss:*)",
+      "Bash(npx shadcn@latest add sheet:*)",
+      "Bash(node -e:*)",
+      "Bash(cat:*)",
+      "Bash(xattr:*)"
+    ]
+  }
+}
