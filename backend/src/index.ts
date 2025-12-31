@@ -17,7 +17,7 @@ if (envResult.parsed) {
 }
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = parseInt(process.env.PORT || '3001', 10);
 
 // Middleware
 app.use(
@@ -134,7 +134,7 @@ app.use(
   }
 );
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`[server] Running on port ${PORT}`);
   console.log(`[server] Frontend URL: ${process.env.FRONTEND_URL}`);
   console.log(`[server] API Key configured: ${process.env.ANTHROPIC_API_KEY ? 'Yes' : 'No'}`);
