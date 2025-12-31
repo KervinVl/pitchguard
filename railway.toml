@@ -1,6 +1,8 @@
 [build]
 builder = "NIXPACKS"
-workdir = "backend"
+
+[build.env]
+NPM_CONFIG_PRODUCTION = "false"
 
 [deploy]
 startCommand = "npm start"
