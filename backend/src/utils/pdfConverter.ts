@@ -17,7 +17,7 @@ export async function convertPdfToImages(
     const pngPages = await pdfToPng(pdfBuffer.buffer as ArrayBuffer, {
       disableFontFace: false,
       useSystemFonts: false,
-      viewportScale: 2.0, // Higher resolution for better OCR
+      viewportScale: 1.5, // Reduced from 2.0 for faster processing on Render
       outputFolder: undefined, // Keep in memory
     });
 
