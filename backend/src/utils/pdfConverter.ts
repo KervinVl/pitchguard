@@ -14,7 +14,7 @@ export async function convertPdfToImages(
   pdfBuffer: Buffer
 ): Promise<ConvertedPage[]> {
   try {
-    const pngPages = await pdfToPng(pdfBuffer, {
+    const pngPages = await pdfToPng(pdfBuffer.buffer as ArrayBuffer, {
       disableFontFace: false,
       useSystemFonts: false,
       viewportScale: 2.0, // Higher resolution for better OCR
@@ -23,7 +23,7 @@ export async function convertPdfToImages(
 
     return pngPages.map((page, index) => ({
       pageNumber: index + 1,
-      base64: page.content.toString('base64'),
+      base64: page.content ? page.content.toString('base64') : '',
       width: page.width,
       height: page.height,
     }));
