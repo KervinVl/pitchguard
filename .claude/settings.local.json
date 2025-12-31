@@ -9,7 +9,9 @@
       "Bash(npx shadcn@latest add sheet:*)",
       "Bash(node -e:*)",
       "Bash(cat:*)",
-      "Bash(xattr:*)"
+      "Bash(xattr:*)",
+      "Bash(git remote set-url:*)",
+      "Bash(git push:*)"
     ]
   }
 }
