@@ -36,7 +36,7 @@
 
 @layer utilities {
   .font-mono {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Inter', sans-serif;
   }
 
   /* Hide scrollbar but keep functionality */

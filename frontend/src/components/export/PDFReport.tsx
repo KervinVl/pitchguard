@@ -1,6 +1,16 @@
 import { useRef } from 'react';
 import type { AnalysisData } from '../../types';
 
+// Sanitize strings before inserting into HTML to prevent XSS
+function escapeHtml(unsafe: string): string {
+  return unsafe
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 interface PDFReportProps {
   data: AnalysisData;
 }
@@ -268,7 +278,7 @@ export function generatePDF(data: AnalysisData): void {
         <div class="pdf-metadata">
           <p class="pdf-meta-item">
             <span class="pdf-meta-label">Funding Stage</span>
-            <span class="pdf-meta-value">${metadata.stage}</span>
+            <span class="pdf-meta-value">${escapeHtml(metadata.stage)}</span>
           </p>
           <p class="pdf-meta-item">
             <span class="pdf-meta-label">Analysis Date</span>
@@ -294,7 +304,7 @@ export function generatePDF(data: AnalysisData): void {
             ${criticalFindings.slice(0, 5).map((finding) => `
               <li class="pdf-risk-list-item">
                 <span class="pdf-risk-bullet">●</span>
-                <span class="pdf-risk-text">${finding.title}</span>
+                <span class="pdf-risk-text">${escapeHtml(finding.title)}</span>
               </li>
             `).join('')}
           </ul>
@@ -326,9 +336,9 @@ export function generatePDF(data: AnalysisData): void {
             <div class="pdf-critical-header">
               <div class="pdf-critical-number">${String(idx + 1).padStart(2, '0')}</div>
               <div class="pdf-critical-content">
-                <h3 class="pdf-critical-title">${finding.title}</h3>
+                <h3 class="pdf-critical-title">${escapeHtml(finding.title)}</h3>
                 <div class="pdf-critical-meta">
-                  <span class="pdf-critical-badge">${finding.biasTag}</span>
+                  <span class="pdf-critical-badge">${escapeHtml(finding.biasTag)}</span>
                   <span class="pdf-critical-divider">•</span>
                   <span class="pdf-critical-slide">Slide ${finding.slide}</span>
                 </div>
@@ -338,7 +348,7 @@ export function generatePDF(data: AnalysisData): void {
             <div class="pdf-critical-body">
               <div class="pdf-critical-section">
                 <p class="pdf-critical-label">Why This Matters</p>
-                <p class="pdf-critical-text">${finding.description}</p>
+                <p class="pdf-critical-text">${escapeHtml(finding.description)}</p>
               </div>
 
               ${finding.logicEvidence.signals.length > 0 ? `
@@ -346,7 +356,7 @@ export function generatePDF(data: AnalysisData): void {
                   <p class="pdf-critical-label">Evidence Observed</p>
                   <ul class="pdf-critical-signals">
                     ${finding.logicEvidence.signals.map((signal) => `
-                      <li>${signal}</li>
+                      <li>${escapeHtml(signal)}</li>
                     `).join('')}
                   </ul>
                 </div>
@@ -357,7 +367,7 @@ export function generatePDF(data: AnalysisData): void {
                   <p class="pdf-critical-label">What to Validate</p>
                   <ul class="pdf-critical-questions">
                     ${finding.strategicQuestions.slice(0, 2).map((q) => `
-                      <li>${q}</li>
+                      <li>${escapeHtml(q)}</li>
                     `).join('')}
                   </ul>
                 </div>
@@ -385,7 +395,7 @@ export function generatePDF(data: AnalysisData): void {
   Object.entries(vulnerabilitiesByCategory).forEach(([category, vulns]) => {
     html += `
       <div class="pdf-vulnerability-category">
-        <h3 class="pdf-category-title">${category}</h3>
+        <h3 class="pdf-category-title">${escapeHtml(category)}</h3>
     `;
 
     vulns.forEach((vuln, idx) => {
@@ -393,9 +403,9 @@ export function generatePDF(data: AnalysisData): void {
         <div class="pdf-vulnerability">
           <h4 class="pdf-vulnerability-title">
             <span class="pdf-vulnerability-number">${String(idx + 1).padStart(2, '0')}.</span>
-            ${vuln.title}
+            ${escapeHtml(vuln.title)}
           </h4>
-          <p class="pdf-vulnerability-impact">${vuln.impact}</p>
+          <p class="pdf-vulnerability-impact">${escapeHtml(vuln.impact)}</p>
         </div>
       `;
     });
@@ -430,7 +440,7 @@ export function generatePDF(data: AnalysisData): void {
             ${phase1Questions.slice(0, 8).map((q) => `
               <div class="pdf-dd-question">
                 <input type="checkbox" class="pdf-checkbox critical-check" />
-                <p class="pdf-dd-text">${q.text}</p>
+                <p class="pdf-dd-text">${escapeHtml(q.text)}</p>
               </div>
             `).join('')}
           </div>
@@ -447,7 +457,7 @@ export function generatePDF(data: AnalysisData): void {
             ${phase2Questions.slice(0, 8).map((q) => `
               <div class="pdf-dd-question">
                 <input type="checkbox" class="pdf-checkbox concern-check" />
-                <p class="pdf-dd-text">${q.text}</p>
+                <p class="pdf-dd-text">${escapeHtml(q.text)}</p>
               </div>
             `).join('')}
           </div>
@@ -464,7 +474,7 @@ export function generatePDF(data: AnalysisData): void {
             ${phase3Questions.slice(0, 6).map((q) => `
               <div class="pdf-dd-question">
                 <input type="checkbox" class="pdf-checkbox watch-check" />
-                <p class="pdf-dd-text">${q.text}</p>
+                <p class="pdf-dd-text">${escapeHtml(q.text)}</p>
               </div>
             `).join('')}
           </div>
